@@ -3,15 +3,12 @@
 	justify-content: center;
 	align-items: center;
 	margin: 0 auto;
-	/* background-color: yellow; */
-	/* width: 80%; */
+
 	margin-bottom: 10px;
 	width: 100%;
-	/* outline: hidden; */
 }
 
 .item__input {
-	/* display: block; */
 	width: 19rem;
 	padding: 10px 20px;
 	border-radius: 5px;
@@ -35,9 +32,7 @@
 }
 
 .done {
-	text-decoration: line-through !important;
 	background-color: rgb(161, 160, 160) !important;
-	/* to se potem zaimplementuje lepiej */
 }
 
 .item__paragraph {

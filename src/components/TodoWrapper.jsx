@@ -1,16 +1,19 @@
 import TodoItem from './TodoItem';
-import { useState, useReducer, useEffect } from 'react';
+import { useState, useReducer } from 'react';
 import './todo-wrapper.css';
 import ACTIONS from './ACTIONS.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 
 const TodoWrapper = () => {
 	const reducer = (todos, action) => {
 		switch (action.type) {
-			case ACTIONS.ADD:
+			case ACTIONS.ADD: {
 				return [...todos, action.payload];
+			}
 			case ACTIONS.EDIT: {
 				return todos.map((todo) => {
-					if (todo.id === action.payload) {
+					if (todo.id === action.payload && todo.isCompleted === false) {
 						return { ...todo, isEdited: true };
 					} else {
 						return todo;
@@ -59,22 +62,22 @@ const TodoWrapper = () => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch({
-			type: ACTIONS.ADD,
-			payload: {
-				id: Math.random(),
-				todo: todo,
-				isCompleted: false,
-				isEdited: false,
-			},
-		});
-		console.log('to jest nasz todo', todo);
-		setTodo('');
-	};
+		if (todo) {
+			dispatch({
+				type: ACTIONS.ADD,
+				payload: {
+					id: Math.random(),
+					todo: todo,
+					isCompleted: false,
+					isEdited: false,
+				},
+			});
 
-	useEffect(() => {
-		console.log('a to nasza tablica z todosami ', todos);
-	}, [todos]);
+			setTodo('');
+		} else {
+			alert('nic nie wpisałeś');
+		}
+	};
 
 	return (
 		<>
@@ -89,16 +92,13 @@ const TodoWrapper = () => {
 						onChange={(e) => setTodo(e.target.value)}
 					/>
 					<button className="todo__submit" type="submit">
-						Wyślij
+						<FontAwesomeIcon icon={faSquarePlus} />
 					</button>
 				</form>
-				{todos.map((todo, index) => {
+				{todos.map((todo) => {
 					return (
 						<>
-							<TodoItem key={index} todo={todo} dispatch={dispatch} />
-							{/* JEST PROBLEM, ŻE WYSYŁA TEŻ PUSTEGO INPUTA 
-							OGÓLNIE DO BUTTONÓW DAĆ IKONKI ZAMIAST TEKSTU
-						*/}
+							<TodoItem key={todo.id} todo={todo} dispatch={dispatch} />
 						</>
 					);
 				})}

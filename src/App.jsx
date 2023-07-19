@@ -8,5 +8,5 @@ const App = () => {
 		</>
 	);
 };
-//Teza: ja się uczę kodu oraz siedzenia przy nim nie stresując się. Aplikacja niech będzie efektem ubocznym.
+
 export default App;

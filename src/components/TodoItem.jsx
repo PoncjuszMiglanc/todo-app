@@ -1,10 +1,31 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import './todo-item.css';
 import ACTIONS from './ACTIONS.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+	faPenToSquare,
+	faCheck,
+	faTrashCan,
+	faSquareXmark,
+	faSquareCheck,
+} from '@fortawesome/free-solid-svg-icons';
 
 const TodoItem = ({ todo, dispatch }) => {
 	const [myInput, setMyInput] = useState(todo.todo);
+	const inputRef = useRef(null);
+
+	//------- tutaj -----------
+	const focusHandler = () => {
+		dispatch({ type: ACTIONS.EDIT, payload: todo.id });
+		if (todo.isCompleted === false) {
+			setTimeout(() => {
+				inputRef.current.focus();
+			}, 50);
+		} else {
+			alert('nie można edytować skończonego zadania');
+		}
+	};
 
 	return (
 		<>
@@ -14,6 +35,7 @@ const TodoItem = ({ todo, dispatch }) => {
 						className="item__input"
 						onChange={(e) => setMyInput(e.target.value)}
 						value={myInput}
+						ref={inputRef}
 						type="text"
 					/>
 				) : (
@@ -28,7 +50,7 @@ const TodoItem = ({ todo, dispatch }) => {
 							dispatch({ type: ACTIONS.COMPLETE, payload: todo.id })
 						}
 					>
-						Niezrobione
+						<FontAwesomeIcon icon={faSquareCheck} />
 					</button>
 				) : (
 					<button
@@ -37,15 +59,12 @@ const TodoItem = ({ todo, dispatch }) => {
 							dispatch({ type: ACTIONS.UNCOMPLETE, payload: todo.id })
 						}
 					>
-						Zrobione
+						<FontAwesomeIcon icon={faSquareXmark} />
 					</button>
 				)}
 				{!todo.isEdited ? (
-					<button
-						className="item__edit"
-						onClick={() => dispatch({ type: ACTIONS.EDIT, payload: todo.id })}
-					>
-						Edit
+					<button className="item__edit" onClick={focusHandler}>
+						<FontAwesomeIcon icon={faPenToSquare} />
 					</button>
 				) : (
 					<button
@@ -57,7 +76,7 @@ const TodoItem = ({ todo, dispatch }) => {
 							})
 						}
 					>
-						Edited
+						<FontAwesomeIcon icon={faCheck} />
 					</button>
 				)}
 
@@ -65,7 +84,7 @@ const TodoItem = ({ todo, dispatch }) => {
 					className="item__delete"
 					onClick={() => dispatch({ type: ACTIONS.DELETE, payload: todo.id })}
 				>
-					Delete
+					<FontAwesomeIcon icon={faTrashCan} />
 				</button>
 			</div>
 		</>
