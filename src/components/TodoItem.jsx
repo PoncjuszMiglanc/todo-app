@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import './todo-item.css';
-import ACTIONS from './ACTIONS.js';
+import ACTIONS from '../assets/ACTIONS.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faPenToSquare,

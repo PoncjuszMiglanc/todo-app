@@ -1,7 +1,7 @@
 import TodoItem from './TodoItem';
 import { useState, useReducer } from 'react';
 import './todo-wrapper.css';
-import ACTIONS from './ACTIONS.js';
+import ACTIONS from '../assets/ACTIONS.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 
